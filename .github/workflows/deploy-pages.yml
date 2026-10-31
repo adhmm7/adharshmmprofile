@@ -1,0 +1,47 @@
+name: Deploy portfolio to GitHub Pages
+
+on:
+  push:
+    branches:
+      - v1
+      - v2
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare site files
+        run: |
+          mkdir -p _site/assets/css _site/assets/js _site/assets/images
+          cp index.html _site/index.html
+          cp assets/css/styles.css _site/assets/css/
+          cp assets/js/main.js _site/assets/js/
+          cp assets/images/profile-casual.jpg assets/images/profile-professional.png assets/images/signature-mark.png _site/assets/images/
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
