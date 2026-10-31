@@ -1,11 +1,121 @@
 const progress = document.querySelector(".progress");
+const heroArtwork = document.querySelector(".hero-art");
+let progressUpdateScheduled = false;
     const updateProgress = () => {
-      const available = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.width = `${available > 0 ? (window.scrollY / available) * 100 : 0}%`;
+  if (progressUpdateScheduled) return;
+  progressUpdateScheduled = true;
+  requestAnimationFrame(() => {
+    progressUpdateScheduled = false;
+    const available = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = `${available > 0 ? (window.scrollY / available) * 100 : 0}%`;
+    if (heroArtwork) {
+      const heroProgress = Math.min(window.scrollY / Math.max(heroArtwork.offsetHeight, 1), 1);
+      heroArtwork.style.setProperty("--hero-scroll-shift", `${(-24 * heroProgress).toFixed(1)}px`);
+    }
+  });
     };
     window.addEventListener("scroll", updateProgress, { passive: true });
     window.addEventListener("resize", updateProgress);
     updateProgress();
+
+    const menuButton = document.querySelector("#menu-toggle");
+    const primaryNavigation = document.querySelector("#primary-navigation");
+    const closeNavigation = (restoreFocus = false) => {
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Open navigation menu");
+      primaryNavigation.classList.remove("is-open");
+      if (restoreFocus) menuButton.focus();
+    };
+    menuButton.addEventListener("click", () => {
+      const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+      primaryNavigation.classList.toggle("is-open", !isOpen);
+      if (!isOpen && window.innerWidth <= 800) primaryNavigation.querySelector("a").focus();
+    });
+    primaryNavigation.addEventListener("click", (event) => {
+      if (event.target.closest("a")) closeNavigation();
+    });
+    document.addEventListener("click", (event) => {
+      if (menuButton.getAttribute("aria-expanded") === "true" && !event.target.closest(".site-header")) closeNavigation();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") closeNavigation(true);
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 800) closeNavigation();
+    });
+
+    const sectionLinks = [...primaryNavigation.querySelectorAll('a[href^="#"]')]
+      .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+      .filter((item) => item.section);
+    if ("IntersectionObserver" in window) {
+      const navigationObserver = new IntersectionObserver((entries) => {
+        const activeEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => first.boundingClientRect.top - second.boundingClientRect.top)[0];
+        if (!activeEntry) return;
+        for (const item of sectionLinks) {
+          const isActive = item.section === activeEntry.target;
+          item.link.classList.toggle("is-active", isActive);
+          if (isActive) item.link.setAttribute("aria-current", "location");
+          else item.link.removeAttribute("aria-current");
+        }
+      }, { rootMargin: "-25% 0px -60% 0px", threshold: 0 });
+      sectionLinks.forEach((item) => navigationObserver.observe(item.section));
+    }
+
+    const projectCards = [...document.querySelectorAll(".project-card")];
+    const projectFilters = [...document.querySelectorAll(".project-filter")];
+    const projectCount = document.querySelector("#project-count");
+    projectFilters.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        let visibleCount = 0;
+        for (const card of projectCards) {
+          const matches = filter === "all" || card.dataset.categories.split(" ").includes(filter);
+          card.hidden = !matches;
+          if (matches) visibleCount++;
+        }
+        projectFilters.forEach((filterButton) => filterButton.setAttribute("aria-pressed", String(filterButton === button)));
+        projectCount.textContent = `${visibleCount} ${visibleCount === 1 ? "project" : "projects"} shown`;
+      });
+    });
+
+    const impactMetrics = [...document.querySelectorAll(".impact-item strong[data-count]")];
+    if ("IntersectionObserver" in window) {
+      const impactObserver = new IntersectionObserver((entries, observer) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const metric = entry.target;
+          observer.unobserve(metric);
+          const target = Number(metric.dataset.count);
+          if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            metric.textContent = `${target}%`;
+            continue;
+          }
+          const start = performance.now();
+          const duration = 850;
+          const updateMetric = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            metric.textContent = `${Math.round(target * eased)}%`;
+            if (progress < 1) requestAnimationFrame(updateMetric);
+          };
+          requestAnimationFrame(updateMetric);
+        }
+      }, { threshold: .55 });
+      impactMetrics.forEach((metric) => {
+        metric.textContent = "0%";
+        metric.setAttribute("aria-label", `${metric.dataset.count}%`);
+        impactObserver.observe(metric);
+      });
+    } else {
+      impactMetrics.forEach((metric) => {
+        metric.textContent = `${metric.dataset.count}%`;
+        metric.setAttribute("aria-label", `${metric.dataset.count}%`);
+      });
+    }
 
     if ("IntersectionObserver" in window) {
       const revealObserver = new IntersectionObserver((entries) => {
@@ -22,6 +132,7 @@ const progress = document.querySelector(".progress");
     }
 
     const assistantLauncher = document.querySelector("#assistant-launcher");
+    const assistantNavTrigger = document.querySelector("#assistant-nav-trigger");
     const assistantPanel = document.querySelector("#profile-assistant");
     const assistantClose = document.querySelector("#assistant-close");
     const assistantInput = document.querySelector("#assistant-input");
@@ -77,6 +188,10 @@ const progress = document.querySelector(".progress");
       assistantLauncher.setAttribute("aria-expanded", "false");
       assistantLauncher.focus();
     };
+    assistantNavTrigger.addEventListener("click", () => {
+      closeNavigation();
+      openAssistant();
+    });
     assistantLauncher.addEventListener("click", () => {
       if (assistantPanel.hidden) openAssistant();
       else closeAssistant();

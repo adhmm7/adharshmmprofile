@@ -25,6 +25,8 @@ adharshmmprofile/
 
 - Responsive portfolio layout built with semantic HTML, CSS, and vanilla JavaScript.
 - Entrance, hover, and scroll-reveal animations, with support for reduced-motion preferences.
+- Filterable engineering project archive and count-up impact metrics.
+- Responsive section navigation with keyboard controls and active-section indication.
 - Profile assistant that answers common questions from curated profile information.
 - Job-description checker that reports skills mentioned both in the role text and the profile.
 - Direct email, phone, and LinkedIn links.
