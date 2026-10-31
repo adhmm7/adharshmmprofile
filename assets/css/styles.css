@@ -87,6 +87,7 @@
       transition: background .2s ease, color .2s ease;
     }
     .nav-links .nav-cta:hover { color: var(--ink); background: var(--lime); }
+    .assistant-nav-trigger { display: none; }
     .menu-toggle {
       display: none;
       width: 42px;
@@ -522,8 +523,8 @@
       transition: transform .2s ease, color .2s ease, background .2s ease;
     }
     .assistant-launcher:hover { transform: translateY(-3px); color: var(--ink); background: var(--lime); }
-    .assistant-launcher span { color: var(--lime); font-size: 17px; }
-    .assistant-launcher:hover span { color: var(--ink); }
+    .assistant-launcher > span:first-child { color: var(--lime); font-size: 17px; }
+    .assistant-launcher:hover > span:first-child { color: var(--ink); }
     .assistant-panel {
       position: fixed;
       z-index: 25;
@@ -653,6 +654,8 @@
       .nav-links.is-open { display: flex; animation: menu-enter .2s ease both; }
       .nav-links a { padding: 13px 0; border-top: 1px solid var(--line); font-size: 11px; }
       .nav-links .nav-cta { align-self: flex-start; margin-top: 12px; padding: 12px 14px; border-top: 0; }
+      .assistant-nav-trigger { display: block; align-self: flex-start; min-height: 42px; margin-top: 12px; padding: 0 14px; border: 1px solid var(--ink); color: var(--paper); background: var(--ink); font: 700 10px var(--body); cursor: pointer; }
+      .assistant-launcher { display: none; }
       .hero {
         min-height: auto;
         height: auto;
@@ -724,7 +727,8 @@
       .connect h2 { font-size: 48px; }
       .connect-action { width: 54px; height: 54px; }
       .connect::after { font-size: 210px; top: 15px; right: -9%; }
-      .assistant-launcher { right: 14px; bottom: 14px; min-height: 48px; padding: 0 14px; }
+      .assistant-launcher { right: 14px; bottom: 14px; width: 48px; min-width: 48px; min-height: 48px; height: 48px; padding: 0; justify-content: center; border-radius: 50%; }
+      .assistant-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
       .assistant-panel { right: 10px; bottom: 72px; max-height: calc(100dvh - 86px); }
       footer { padding: 20px 7%; font-size: 9px; }
     }

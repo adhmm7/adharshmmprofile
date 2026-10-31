@@ -132,6 +132,7 @@ let progressUpdateScheduled = false;
     }
 
     const assistantLauncher = document.querySelector("#assistant-launcher");
+    const assistantNavTrigger = document.querySelector("#assistant-nav-trigger");
     const assistantPanel = document.querySelector("#profile-assistant");
     const assistantClose = document.querySelector("#assistant-close");
     const assistantInput = document.querySelector("#assistant-input");
@@ -187,6 +188,10 @@ let progressUpdateScheduled = false;
       assistantLauncher.setAttribute("aria-expanded", "false");
       assistantLauncher.focus();
     };
+    assistantNavTrigger.addEventListener("click", () => {
+      closeNavigation();
+      openAssistant();
+    });
     assistantLauncher.addEventListener("click", () => {
       if (assistantPanel.hidden) openAssistant();
       else closeAssistant();

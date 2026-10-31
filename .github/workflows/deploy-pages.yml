@@ -3,6 +3,7 @@ name: Deploy portfolio to GitHub Pages
 on:
   push:
     branches:
+      - main
       - v1
       - v2
       - v3
