@@ -12,18 +12,26 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="progress" aria-hidden="true"></div>
   <header class="site-header">
     <a class="wordmark" href="#home" aria-label="Adharsh M M, home">ADHARSH M M<span>.</span></a>
-    <nav class="nav-links" aria-label="Main navigation">
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+    <nav class="nav-links" id="primary-navigation" aria-label="Main navigation">
+      <a href="#profile">Profile</a>
       <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#interests">Interests</a>
+      <a href="#credentials">Education</a>
       <a href="#connect">Contact</a>
       <a class="nav-cta" href="https://www.linkedin.com/in/adhmm7/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <section class="hero" id="home" aria-labelledby="hero-title">
       <div class="hero-copy">
         <div class="eyebrow">Software engineer · Backend & platform</div>
@@ -66,10 +74,10 @@
     </section>
 
     <section class="impact" aria-label="Selected engineering impact">
-      <div class="impact-item reveal"><strong>20%</strong><span>Lower API latency through service and query improvements</span></div>
-      <div class="impact-item reveal"><strong>25%</strong><span>Higher processing efficiency through SQL and batching work</span></div>
-      <div class="impact-item reveal"><strong>30%</strong><span>Faster incident resolution through production analysis</span></div>
-      <div class="impact-item reveal"><strong>15%</strong><span>Fewer transaction failures through resilience tuning</span></div>
+      <div class="impact-item reveal"><strong data-count="20">20%</strong><span>Lower API latency through service and query improvements</span></div>
+      <div class="impact-item reveal"><strong data-count="25">25%</strong><span>Higher processing efficiency through SQL and batching work</span></div>
+      <div class="impact-item reveal"><strong data-count="30">30%</strong><span>Faster incident resolution through production analysis</span></div>
+      <div class="impact-item reveal"><strong data-count="15">15%</strong><span>Fewer transaction failures through resilience tuning</span></div>
     </section>
 
     <section class="experience" id="experience" aria-labelledby="experience-title">
@@ -125,10 +133,60 @@
       </article>
     </section>
 
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <div>
+          <div class="section-index">03 / Selected engineering work</div>
+          <h2 id="projects-title">Systems built for real production demands.</h2>
+        </div>
+        <p>Browse documented work across API delivery, integrations, performance, and production reliability.</p>
+      </div>
+      <div class="project-controls">
+        <div class="project-filters" role="group" aria-label="Filter projects">
+          <button class="project-filter" type="button" data-filter="all" aria-pressed="true">All work</button>
+          <button class="project-filter" type="button" data-filter="api" aria-pressed="false">APIs</button>
+          <button class="project-filter" type="button" data-filter="integration" aria-pressed="false">Integrations</button>
+          <button class="project-filter" type="button" data-filter="performance" aria-pressed="false">Performance</button>
+          <button class="project-filter" type="button" data-filter="reliability" aria-pressed="false">Reliability</button>
+        </div>
+        <p class="project-count" id="project-count" role="status" aria-live="polite">4 projects shown</p>
+      </div>
+      <div class="project-grid" id="project-grid">
+        <article class="project-card reveal" data-categories="api integration">
+          <div class="project-card-top"><span>01 / CURRENT</span><span>Deloitte · HPE</span></div>
+          <h3>Next Generation Quoting</h3>
+          <p>Backend capabilities and lifecycle workflows for an enterprise CPQ platform, including quote processing, pricing updates, Cost Relief, and persistence.</p>
+          <p class="project-outcome">Integration focus: Salesforce · S4/Corona · downstream systems</p>
+          <p class="project-tech">Java · Spring Boot · REST microservices</p>
+        </article>
+        <article class="project-card reveal" data-categories="api performance reliability">
+          <div class="project-card-top"><span>02 / DIGITAL BANKING</span><span>Tagit · Axis</span></div>
+          <h3>Omni-Channel Banking</h3>
+          <p>Payment, dashboard, and authentication services for high-volume banking flows, with SQL tuning, async processing, and resilience improvements.</p>
+          <p class="project-outcome">20% lower API latency · 15% fewer transaction failures</p>
+          <p class="project-tech">Java 8 · Spring Cloud · Oracle SQL · Redis · Kubernetes</p>
+        </article>
+        <article class="project-card reveal" data-categories="integration performance">
+          <div class="project-card-top"><span>03 / INTERNATIONAL BANKING</span><span>Tagit · Axis GIFT City</span></div>
+          <h3>Multi-Currency Workflows</h3>
+          <p>APIs for accounts, deposits, cross-border transactions, reconciliation, and settlement under strict foreign-exchange compliance requirements.</p>
+          <p class="project-outcome">25% higher processing efficiency through SQL and batching work</p>
+          <p class="project-tech">Spring Boot · REST · SQL · Security · Audit logging</p>
+        </article>
+        <article class="project-card reveal" data-categories="performance reliability">
+          <div class="project-card-top"><span>04 / PRODUCTION</span><span>Tagit · IB/MB</span></div>
+          <h3>Incident & Platform Reliability</h3>
+          <p>Root-cause analysis and targeted production fixes using JVM diagnostics, thread and heap analysis, profiling, and configuration tuning.</p>
+          <p class="project-outcome">30% faster incident resolution · 15% improved platform stability</p>
+          <p class="project-tech">JVM tools · Prometheus · Log analysis · Kubernetes</p>
+        </article>
+      </div>
+    </section>
+
     <section class="skills" id="skills" aria-labelledby="skills-title">
       <div class="section-heading">
         <div>
-          <div class="section-index">03 / Technical toolkit</div>
+          <div class="section-index">04 / Technical toolkit</div>
           <h2 id="skills-title">Practical tools for dependable software.</h2>
         </div>
       </div>
@@ -143,9 +201,25 @@
       </div>
     </section>
 
-    <section class="credentials" aria-labelledby="credentials-title">
+    <section class="interests" id="interests" aria-labelledby="interests-title">
+      <div class="section-heading">
+        <div>
+          <div class="section-index">05 / Beyond the role</div>
+          <h2 id="interests-title">What I keep exploring.</h2>
+        </div>
+        <p>Professional interests listed in my resume, beyond the systems I work on day to day.</p>
+      </div>
+      <ul class="interest-list">
+        <li class="reveal">Distributed systems</li>
+        <li class="reveal">Backend architecture</li>
+        <li class="reveal">Open source</li>
+        <li class="reveal">API performance engineering</li>
+      </ul>
+    </section>
+
+    <section class="credentials" id="credentials" aria-labelledby="credentials-title">
       <div>
-        <div class="section-index">04 / Education & learning</div>
+        <div class="section-index">06 / Education & learning</div>
         <h2 id="credentials-title">Grounded in fundamentals.<br>Always learning.</h2>
       </div>
       <div class="credential-list">
@@ -160,7 +234,7 @@
 
     <section class="connect" id="connect" aria-labelledby="connect-title">
       <div>
-        <div class="section-index reveal">05 / Get in touch</div>
+        <div class="section-index reveal">07 / Get in touch</div>
         <h2 class="reveal" id="connect-title">Let’s build something<br><span>dependable.</span></h2>
         <div class="contact-details reveal">
           <a href="mailto:adhmm7india@gmail.com">adhmm7india@gmail.com</a>
