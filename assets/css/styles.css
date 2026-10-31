@@ -148,6 +148,14 @@
     }
     .text-link .arrow { color: var(--orange); font-size: 18px; transition: transform .2s ease; }
     .text-link:hover .arrow { transform: translate(3px, -3px); }
+    .signature-mark { width: min(260px, 100%); margin: 18px 0 0 2px; transform: rotate(-2deg); transform-origin: left center; }
+    .signature-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      animation: signature-stroke-reveal 1.45s cubic-bezier(.2,.7,.2,1) 1.05s both;
+    }
     .hero-art {
       height: min(590px, 71vh);
       min-height: 390px;
@@ -491,6 +499,9 @@
     @keyframes designation-pulse {
       50% { transform: scale(.65); opacity: .55; }
     }
+    @keyframes signature-stroke-reveal {
+      to { clip-path: inset(0 0 0 0); }
+    }
     @keyframes artwork-reveal {
       to { transform: scaleX(1); }
     }
@@ -523,6 +534,7 @@
       .reveal { opacity: 1; filter: none; transform: none; }
       .designation { clip-path: none; animation: none; }
       .designation span { animation: none; }
+      .signature-image { clip-path: none; animation: none; }
       .hero-art::before, .hero-photo { animation: none; transform: none; }
     }
     @media (max-width: 800px) {

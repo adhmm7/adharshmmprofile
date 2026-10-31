@@ -12,6 +12,7 @@ adharshmmprofile/
 │   ├── images/
 │   │   ├── profile-casual.jpg
 │   │   └── profile-professional.png
+│   │   └── signature-mark.png
 │   └── js/
 │       └── main.js
 ├── index.html
@@ -37,7 +38,7 @@ No package installation or build step is required.
 1. Open this folder in VS Code.
 2. Open `index.html` directly in a browser, or use the Live Server extension to preview it locally.
 
-Google Fonts require an internet connection. Profile photos are stored locally in `assets/images/`: `profile-professional.png` is used in the hero, and `profile-casual.jpg` appears as the secondary portrait.
+Google Fonts require an internet connection. Profile photos and the transparent signature mark are stored in `assets/images/`. The original signature paper photo remains local and is excluded from Git and the deployed site.
 
 ## Customize
 
