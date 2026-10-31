@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - v1
+      - v2
   workflow_dispatch:
 
 permissions:
@@ -32,7 +33,7 @@ jobs:
         run: |
           mkdir -p _site/assets
           cp index.html _site/index.html
-          cp -R assets/css assets/js _site/assets/
+          cp -R assets/css assets/js assets/images _site/assets/
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4

@@ -9,6 +9,9 @@ adharshmmprofile/
 ├── assets/
 │   ├── css/
 │   │   └── styles.css
+│   ├── images/
+│   │   ├── profile-casual.jpg
+│   │   └── profile-professional.png
 │   └── js/
 │       └── main.js
 ├── index.html
@@ -34,12 +37,13 @@ No package installation or build step is required.
 1. Open this folder in VS Code.
 2. Open `index.html` directly in a browser, or use the Live Server extension to preview it locally.
 
-Google Fonts and the hero image are loaded from external services, so those assets require an internet connection. Replace the hero image URL in `index.html` with a local asset when adding a profile photo.
+Google Fonts require an internet connection. Profile photos are stored locally in `assets/images/`: `profile-professional.png` is used in the hero, and `profile-casual.jpg` appears as the secondary portrait.
 
 ## Customize
 
 - Update profile content, links, experience, and assistant answers in `index.html` and `assets/js/main.js`.
 - Update colors, layout, responsive rules, and animations in `assets/css/styles.css`.
+- Replace the portrait files in `assets/images/` to update the profile photography while keeping the same filenames.
 - Keep assistant responses grounded in verified profile details. The current assistant does not call an AI API.
 
 ## Deployment
